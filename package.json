@@ -1,0 +1,25 @@
+{
+  "name": "character-sheet",
+  "version": "1.0.0",
+  "description": "character sheet manager for d&D",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarrieShort/character-sheet.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CarrieShort/character-sheet/issues"
+  },
+  "homepage": "https://github.com/CarrieShort/character-sheet#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^4.13.5",
+    "superagent": "^3.8.1"
+  }
+}
