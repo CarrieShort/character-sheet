@@ -5,9 +5,21 @@ chai.use(chaiHttp);
 const port = process.env.PORT = 5000;
 const mongoose = require('mongoose');
 const User = require(__dirname + '/../models/user');
-// process.env.MONGODB_URI = 'mongodb://localhost/testdb';
-// const server = require(__dirname + '/../server');
+process.env.MONGODB_URI = 'mongodb://localhost/testdb';
+const server = require(__dirname + '/../server');
 describe('the User schema', () => {
+  before((done)=>{
+    server.listen(port, () =>{
+      console.log('server up on port ' + port);
+      done();
+    });
+  });
+  after((done) => {
+    server.close(()=>{
+      console.log('server closes');
+      done();
+    })
+  });
   it('should require name and password', (done) => {
     var newUser = new User();
     newUser.validate((err) => {
@@ -24,11 +36,12 @@ describe('the User schema', () => {
     });
   });
   it('should hash the password before saving', (done) => {
-    var newUser = new User({email: 'blue@test.com', password: 'testpass'});
+    var newUser = new User({email: 'testname@test.com', password: 'testpass'});
     newUser.save((err) => {
-      expect(newUser.email).to.equal('blue@test.com');
-      expect(newUser.password).to.not.equal('testpass');
+      expect(newUser.email).to.equal('testname@test.com');
+      expect(newUser.password).not.to.equal('testpass');
       done();
     });
+
   });
 })

@@ -19,6 +19,7 @@
   "homepage": "https://github.com/CarrieShort/character-sheet#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.5.1",
     "express": "^4.16.2",
     "mongoose": "^4.13.5",
     "passport": "^0.4.0",
