@@ -8,7 +8,7 @@ authRouter.post('/signup', bodyParser, (req, res) => {
   if (!req.body.email) return res.status(500).json({ msg: 'missing email' });
   if (!req.body.password) return res.status(500).json({ msg: 'missing password' });
   var newUser = new User(req.body);
-  
+
   newUser.save((err, user) => {
     console.log('some stuff: ', err, user);
     if (err && err.errors && err.errors.email && err.errors.email.message) {
@@ -22,6 +22,3 @@ authRouter.post('/signup', bodyParser, (req, res) => {
     console.log('what ', user);
   });;
 });
-
-// authRouter.post('/login', passport.authenticate('local', { successRedirect: '/',
-//                                                     failureRedirect: '/login' }))
