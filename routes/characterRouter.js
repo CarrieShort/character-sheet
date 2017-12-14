@@ -22,3 +22,12 @@ characterRouter.get('/characters', (req, res) => {
     res.status(200).json(data);
   });
 });
+
+characterRouter.put('/character/:id', bodyParser, (req, res) => {
+  var characterData = req.body;
+  delete characterData._id;
+  Character.update({ _id: req.params.id }, characterData, (err, data) => {
+    if (err) return res.status(500).json({ msg: 'there was an error' });
+    res.status(200).json(data);
+  });
+});
