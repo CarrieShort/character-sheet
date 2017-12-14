@@ -27,7 +27,16 @@ characterRouter.put('/character/:id', bodyParser, (req, res) => {
   var characterData = req.body;
   delete characterData._id;
   Character.update({ _id: req.params.id }, characterData, (err, data) => {
-    if (err) return res.status(500).json({ msg: 'there was an error' });
+    if (err) return res.status(500).json({ msg: 'failed to update character' });
     res.status(200).json(data);
+  });
+});
+
+characterRouter.delete('/character/:id', (req, res) => {
+  Character.remove({_id: req.params.id}, (err) => {
+    if (err) return res.status(500).json({ msg: 'failed to delete character' });
+    res.status(200).json({
+      msg: 'character has been deleted'
+    });
   });
 });
