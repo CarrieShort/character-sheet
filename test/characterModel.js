@@ -21,7 +21,7 @@ describe('the Character schema', () => {
       done();
     })
   });
-  it('new character is saved when object is passed to Character Model', (done) => {
+  it('new character is saved when good object is passed to Character Model', (done) => {
     var newCharacter = new Character(testCharacter.good);
     newCharacter.save((err, product) => {
       expect(product.characterName).to.equal(testCharacter.good.characterName);

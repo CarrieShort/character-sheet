@@ -3,12 +3,14 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const mongoose = require('mongoose');
 const authRouter = require(__dirname + '/routes/authRouter');
+const characterRouter = require(__dirname + '/routes/characterRouter');
 process.env.MONGODB_URI = 'mongodb://localhost/dandb';
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/db', {
   useMongoClient: true
 });
 
 app.use('/api', authRouter);
+app.use('/api', characterRouter);
 app.use('/test', (req, res) =>{
   res.status(200).send('hi there');
 })
