@@ -35,7 +35,7 @@ var characterSchema = new mongoose.Schema({
     max: Number,
     temporary: Number,
     dice: String
-  }
+  },
   speed: Number,
   initiative: Number,
   deathSave: {
@@ -43,7 +43,7 @@ var characterSchema = new mongoose.Schema({
       type: Number,
       min: 0,
       max: 3
-    }
+    },
     success: {
       type: Number,
       min: 0,
@@ -60,4 +60,4 @@ var characterSchema = new mongoose.Schema({
   }
 });
 
-module.exports = exports = model.mongoose('Character', characterSchema);
+module.exports = exports = mongoose.model('Character', characterSchema);
