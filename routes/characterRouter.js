@@ -4,17 +4,21 @@ const bodyParser = require('body-parser').json();
 const characterRouter = module.exports = exports = new Router();
 
 var missingField = function (req, res, fieldName, message) {
-  if (!req.body[fieldName]) return res.status(500).json({ msg: 'missing: ' + message});
+  if (!req.body[fieldName]) return res.status(500).json({ msg: message});
 }
 
 characterRouter.post('/create', bodyParser, (req, res) => {
-  missingField(req, res, 'characterName', 'character name');
-  missingField(req, res, 'level', 'character name');
-  missingField(req, res, 'class', 'character name');
-  missingField(req, res, 'playerId', 'character name');
-  missingField(req, res, 'race', 'character name');
-  missingField(req, res, 'alignment', 'character name');
-  missingField(req, res, 'xp', 'character name');
-  missingField(req, res, 'xp', 'character name');
-  return res.status(200).json({status: 'Creation Successful!'});
+  missingField(req, res, 'playerId', 'missing player id, you may not be logged in or something went wrong when trying to add a character to your account');
+  var newCharacter = new Character(req.body);
+  newCharacter.save((err, character) => {
+    if (err) return res.status(500).json({ msg: 'could not create character' });
+    return res.status(200).json({status: character.characterName + ' has been created'});
+  });
+});
+
+characterRouter.get('/characters', (req, res) => {
+  Character.find({}, (err, data) => {
+    if (err) return res.status(500).json({ msg: 'there was an error' });
+    res.status(200).json(data);
+  });
 });
