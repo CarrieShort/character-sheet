@@ -9,16 +9,22 @@ process.env.MONGODB_URI = 'mongodb://localhost/testdb';
 const server = require(__dirname + '/../server');
 describe('the User schema', () => {
   before((done)=>{
-    server.listen(port, () =>{
-      console.log('server up on port ' + port);
+    mongoose.connect(process.env.MONGODB_URI, () => {
+    server.listen(port, () => {
+      console.log('server up on port:' + port);
       done();
     });
   });
-  after((done) => {
-    server.close(()=>{
-      console.log('server closes');
-      done();
-    })
+  });
+  after ((done)=> {
+    mongoose.connection.db.dropDatabase(() => {
+     mongoose.disconnect(() => {
+       server.close(()=>{
+         console.log('server closes');
+         done();
+       });
+     });
+    });
   });
   it('should require name and password', (done) => {
     var newUser = new User();
@@ -36,7 +42,7 @@ describe('the User schema', () => {
     });
   });
   it('should hash the password before saving', (done) => {
-    var newUser = new User({email: 'testname@test.com', password: 'testpass'});
+    var newUser = new User({email: 'testname@test.com', password: 'testpass', name:'jake'});
     newUser.save((err) => {
       expect(newUser.email).to.equal('testname@test.com');
       expect(newUser.password).not.to.equal('testpass');

@@ -11,10 +11,12 @@ const server = require(__dirname + '/../server');
 
 describe('route that adds character', () => {
   before((done) => {
-    server.listen(port, () =>{
-      console.log('server up on port ' + port);
+    mongoose.connect(process.env.MONGODB_URI, () => {
+    server.listen(port, () => {
+      console.log('server up on port:' + port);
       done();
     });
+  });
   });
   after ((done)=> {
     mongoose.connection.db.dropDatabase(() => {

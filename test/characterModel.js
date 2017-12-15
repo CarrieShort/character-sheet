@@ -10,15 +10,22 @@ process.env.MONGODB_URI = 'mongodb://localhost/testdb';
 const server = require(__dirname + '/../server');
 describe('the Character schema', () => {
   before((done)=>{
-    server.listen(port, () =>{
-      console.log('server up on port ' + port);
-      done();
+    mongoose.connect(process.env.MONGODB_URI, () => {
+      server.listen(port, () => {
+        console.log('server up on port:' + port);
+        done();
+      });
     });
   });
-  after((done) => {
-    server.close(()=>{
-      console.log('server closes');
-      done();
+
+  after ((done)=> {
+    mongoose.connection.db.dropDatabase(() => {
+     mongoose.disconnect(() => {
+       server.close(()=>{
+         console.log('server closes');
+         done();
+       });
+     });
     });
   });
   it('new character is saved when good object is passed to Character Model', (done) => {
