@@ -19,7 +19,7 @@ describe('the Character schema', () => {
     server.close(()=>{
       console.log('server closes');
       done();
-    })
+    });
   });
   it('new character is saved when good object is passed to Character Model', (done) => {
     var newCharacter = new Character(testCharacter.good);

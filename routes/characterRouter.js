@@ -12,7 +12,7 @@ characterRouter.post('/create', bodyParser, (req, res) => {
   var newCharacter = new Character(req.body);
   newCharacter.save((err, character) => {
     if (err) return res.status(500).json({ msg: 'could not create character' });
-    return res.status(200).json({status: character.characterName + ' has been created'});
+    return res.status(200).json(character);
   });
 });
 
