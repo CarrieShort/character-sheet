@@ -98,4 +98,28 @@ describe('routes that modify an existing character', () => {
       done();
     });
   });
+
+  it('should change the character on PUT', (done) => {
+    request('localhost:' + port)
+    .put('/api/character/' + this.character._id)
+    .send({
+      characterName: 'Different Name'
+    })
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(200);
+      expect(res.body.nModified).to.eql(1);
+      done();
+    });
+  });
+  it('should remove the character on DELETE', (done) => {
+    request('localhost:' + port)
+    .delete('/api/character/' + this.character._id)
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(200);
+      expect(res.body.msg).to.eql('character has been deleted');
+      done();
+    });
+  });
 });
