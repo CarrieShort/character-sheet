@@ -5,7 +5,7 @@ const webpack = require('webpack-stream');
 const sass = require('gulp-sass');
 const maps = require('gulp-sourcemaps');
 const cleanCss = require('gulp-clean-css');
-const testFiles = ['./test/userModel.js', './test/characterModel.js'];
+const testFiles = ['./test/userModel.js', './test/characterModel.js', './test/characterRouter.js'];
 
 gulp.task('test:mocha', () => {
   return gulp.src(testFiles)

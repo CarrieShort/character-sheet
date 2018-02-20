@@ -16,17 +16,14 @@ describe('route that adds character', () => {
       mockgoose.prepareStorage().then(() => {
       mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}, () =>{
         server = require(__dirname + '/../server');
-        console.log('db connection is now open for characterRouter');
         done();
       });
     });
   });
   after ((done)=> {
     mockgoose.helper.reset().then(() => {
-      console.log('mockgoose close');
       mongoose.connection.close(() => {
         server.close(()=>{
-          console.log('server closes');
           done();
         });
       })
@@ -61,7 +58,6 @@ describe('routes that modify an existing character', () => {
       mockgoose.prepareStorage().then(() => {
       mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}, () =>{
         server.listen(port, () => {
-          console.log('server up on port ' + port);
           done();
         });
       });
@@ -88,7 +84,6 @@ describe('routes that modify an existing character', () => {
     mongoose.connection.db.dropDatabase(() => {
      mongoose.disconnect(() => {
        server.close(()=>{
-         console.log('server closes');
          done();
        });
      });

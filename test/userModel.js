@@ -11,7 +11,6 @@ describe('the User schema', () => {
   before((done) =>{
     mockgoose.prepareStorage().then(() => {
       mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}, () =>{
-        console.log('db connection is now open for characterModel');
         done();
       });
 });
@@ -19,9 +18,7 @@ describe('the User schema', () => {
 });
 after ((done)=> {
   mockgoose.helper.reset().then(() => {
-    console.log('mockgoose close');
     mongoose.connection.close(done);
-    // mongoose.disconnect(done);
   });
 });
 
@@ -41,11 +38,8 @@ after ((done)=> {
     });
   });
   it('should hash the password before saving', (done) => {
-    console.log ('before save');
     var newUser = new User({email: 'testname@test.com', password: 'testpass', name:'jake'});
     newUser.save((err) => {
-      console.log('save did occure');
-      console.log('this is the error', err);
       expect(newUser.email).to.equal('testname@test.com');
       expect(newUser.password).not.to.equal('testpass');
       done();

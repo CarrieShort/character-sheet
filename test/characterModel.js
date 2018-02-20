@@ -13,14 +13,12 @@ describe('the Character schema', () => {
   before((done) =>{
     mockgoose.prepareStorage().then(() => {
     mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}, () =>{
-      console.log('db connection is now open for characterModel');
       done();
     });
 });
 });
 after ((done)=> {
   mockgoose.helper.reset().then(() => {
-    console.log('mockgoose close');
     mongoose.connection.close(done)
   });
 });
