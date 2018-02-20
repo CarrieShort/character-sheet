@@ -2,32 +2,28 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
 chai.use(chaiHttp);
-const port = process.env.PORT = 5000;
 const mongoose = require('mongoose');
+const Mockgoose = require('mockgoose').Mockgoose;
+const mockgoose = new Mockgoose(mongoose);
+process.env.MONGODB_URI = 'mongodb://localhost/testdb';
 const Character = require(__dirname + '/../models/character');
 const testCharacter = require(__dirname + '/../test/testCharacter');
-process.env.MONGODB_URI = 'mongodb://localhost/testdb';
-const server = require(__dirname + '/../server');
-describe('the Character schema', () => {
-  before((done)=>{
-    mongoose.connect(process.env.MONGODB_URI, () => {
-      server.listen(port, () => {
-        console.log('server up on port:' + port);
-        done();
-      });
-    });
-  });
 
-  after ((done)=> {
-    mongoose.connection.db.dropDatabase(() => {
-     mongoose.disconnect(() => {
-       server.close(()=>{
-         console.log('server closes');
-         done();
-       });
-     });
+describe('the Character schema', () => {
+  before((done) =>{
+    mockgoose.prepareStorage().then(() => {
+    mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}, () =>{
+      console.log('db connection is now open for characterModel');
+      done();
     });
+});
+});
+after ((done)=> {
+  mockgoose.helper.reset().then(() => {
+    console.log('mockgoose close');
+    mongoose.connection.close(done)
   });
+});
   it('new character is saved when good object is passed to Character Model', (done) => {
     var newCharacter = new Character(testCharacter.good);
     newCharacter.save((err, product) => {

@@ -5,28 +5,36 @@ chai.use(chaiHttp);
 const request = chai.request;
 const port = process.env.PORT = 5000;
 const mongoose = require('mongoose');
+const Mockgoose = require('mockgoose').Mockgoose;
+const mockgoose = new Mockgoose(mongoose);
 const Character = require(__dirname + '/../models/character');
 process.env.MONGODB_URI = 'mongodb://localhost/testdb';
-const server = require(__dirname + '/../server');
+let server;
 
 describe('route that adds character', () => {
-  before((done) => {
-    mongoose.connect(process.env.MONGODB_URI, () => {
-    server.listen(port, () => {
-      console.log('server up on port:' + port);
-      done();
+  before((done) =>{
+      mockgoose.prepareStorage().then(() => {
+      mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}, () =>{
+        server = require(__dirname + '/../server');
+        console.log('db connection is now open for characterRouter');
+        done();
+      });
     });
-  });
   });
   after ((done)=> {
-    mongoose.connection.db.dropDatabase(() => {
-     mongoose.disconnect(() => {
-       server.close(()=>{
-         console.log('server closes');
-         done();
-       });
-     });
+    mockgoose.helper.reset().then(() => {
+      console.log('mockgoose close');
+      mongoose.connection.close(() => {
+        server.close(()=>{
+          console.log('server closes');
+          done();
+        });
+      })
     });
+  });
+  before((done) => {
+    if (mongoose.connection.db) return done();
+    mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true }, done);
   });
 
   it('should create a character via the post route', (done) => {
@@ -49,11 +57,13 @@ describe('route that adds character', () => {
 });
 
 describe('routes that modify an existing character', () => {
-  before((done) => {
-    mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/testdb', () => {
-      server.listen(port, () => {
-        console.log('server up on port ' + port);
-        done();
+  before((done) =>{
+      mockgoose.prepareStorage().then(() => {
+      mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}, () =>{
+        server.listen(port, () => {
+          console.log('server up on port ' + port);
+          done();
+        });
       });
     });
   });
