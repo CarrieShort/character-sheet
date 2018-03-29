@@ -8,11 +8,14 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/dandb', {
   useMongoClient: true
 });
 
+
 app.use('/api', authRouter);
 app.use('/api', characterRouter);
 app.use('/test', (req, res) =>{
   res.status(200).send('hi there');
 })
+app.use(express.static(__dirname + '/build'));
+
 
 app.use((req, res) => {
   res.status(404).send('Page not found!');
