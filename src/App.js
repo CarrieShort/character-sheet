@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Abilities from './components/abilities';
 import {
   BrowserRouter,
   Route,
@@ -13,7 +14,7 @@ class App extends Component {
     return (
       <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Home}/>
+        <Route exact path="/" component={Abilities}/>
       </Switch>
       </BrowserRouter>
     );
