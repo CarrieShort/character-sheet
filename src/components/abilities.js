@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 
 class Abilities extends Component {
-
+  state = {
+    abilities: {
+      strength: '',
+      dexterity: '',
+      constitution: '',
+      intelligence: '',
+      wisdom: '',
+      charisma: ''
+    }
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(e)
