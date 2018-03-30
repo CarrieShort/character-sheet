@@ -6,12 +6,12 @@ class Abilities extends Component {
     isError: false,
     errorMessage: '',
     abilities: {
-      strength: '',
-      dexterity: '',
-      constitution: '',
-      intelligence: '',
-      wisdom: '',
-      charisma: ''
+      strength: 0,
+      dexterity: 0,
+      constitution: 0,
+      intelligence: 0,
+      wisdom: 0,
+      charisma: 0
     }
   }
   onInputChange = e => {
@@ -45,13 +45,13 @@ class Abilities extends Component {
       {this.state.isError ? (<p>{this.state.errorMessage}</p>) : ''}
       <h2>Abilities</h2>
         <form className="form abilities" onSubmit={this.handleSubmit}>
-          <input type="text" name="strength" onChange={this.onInputChange} value={this.state.abilities.strength} />
-          <input type="text" name="dexterity" onChange={this.onInputChange} value={this.state.abilities.dexterity}/>
-          <input type="text" name="constitution" onChange={this.onInputChange} value={this.state.abilities.constitution}/>
-          <input type="text" name="intelligence" onChange={this.onInputChange} value={this.state.abilities.intelligence}/>
-          <input type="text" name="wisdom" onChange={this.onInputChange} value={this.state.abilities.wisdom}/>
-          <input type="text" name="charisma" onChange={this.onInputChange} value={this.state.abilities.charisma}/>
-          <button type="submit">Save</button>
+          <input type="number" name="strength" onChange={this.onInputChange} value={this.state.abilities.strength} />
+          <input type="number" name="dexterity" onChange={this.onInputChange} value={this.state.abilities.dexterity}/>
+          <input type="number" name="constitution" onChange={this.onInputChange} value={this.state.abilities.constitution}/>
+          <input type="number" name="intelligence" onChange={this.onInputChange} value={this.state.abilities.intelligence}/>
+          <input type="number" name="wisdom" onChange={this.onInputChange} value={this.state.abilities.wisdom}/>
+          <input type="number" name="charisma" onChange={this.onInputChange} value={this.state.abilities.charisma}/>
+          <button type="number">Save</button>
         </form>
       </section>
     )
