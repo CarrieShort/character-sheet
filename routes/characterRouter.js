@@ -4,11 +4,13 @@ const bodyParser = require('body-parser').json();
 const characterRouter = module.exports = exports = new Router();
 
 var missingField = function (req, res, fieldName, message) {
-  if (!req.body[fieldName]) return res.status(500).json({ msg: message});
+  return res.status(500).json({ msg: 'missing ' + fieldName + ', ' + message});
+  return false;
 }
 
 characterRouter.post('/create', bodyParser, (req, res) => {
-  missingField(req, res, 'playerId', 'missing player id, you may not be logged in or something went wrong when trying to add a character to your account');
+  if(!req.body.playerId)
+  return missingField(req, res, 'playerId', 'you may not be logged in or something went wrong when trying to add a character to your account.');
   var newCharacter = new Character(req.body);
   newCharacter.save((err, character) => {
     if (err) return res.status(500).json({ msg: 'could not create character' });
