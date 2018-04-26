@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser')
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 8080;
 const mongoose = require('mongoose');
@@ -14,8 +16,13 @@ app.use('/api', characterRouter);
 app.use('/test', (req, res) =>{
   res.status(200).send('hi there');
 })
+// route for static resources
 app.use(express.static(__dirname + '/build'));
 
+// route for application routes
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/build', 'index.html'));
+});
 
 app.use((req, res) => {
   res.status(404).send('Page not found!');

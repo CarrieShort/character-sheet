@@ -18,6 +18,7 @@ characterRouter.post('/create', bodyParser, (req, res) => {
   });
 });
 
+// get all character data
 characterRouter.get('/characters', (req, res) => {
   Character.find({}, (err, data) => {
     if (err) return res.status(500).json({ msg: 'there was an error' });
@@ -25,6 +26,15 @@ characterRouter.get('/characters', (req, res) => {
   });
 });
 
+// get single character data
+characterRouter.get('/character/:id', (req, res) => {
+  Character.find({ _id: req.params.id }, (err, data) => {
+    if (err) return res.status(500).json({ msg: 'there was an error' });
+    res.status(200).json(data);
+  });
+});
+
+// update single character data
 characterRouter.put('/character/:id', bodyParser, (req, res) => {
   var characterData = req.body;
   delete characterData._id;
@@ -34,6 +44,7 @@ characterRouter.put('/character/:id', bodyParser, (req, res) => {
   });
 });
 
+// delete single character
 characterRouter.delete('/character/:id', (req, res) => {
   Character.remove({_id: req.params.id}, (err) => {
     if (err) return res.status(500).json({ msg: 'failed to delete character' });

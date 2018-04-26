@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "character sheet manager for d&D",
   "main": "server.js",
+  "proxy": "http://localhost:8080",
   "scripts": {
     "test": "mocha --exit",
     "start": "node server.js && react-scripts start",
@@ -19,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/CarrieShort/character-sheet/issues"
   },
-  "homepage": "./",
+  "homepage": "/",
   "dependencies": {
     "axios": "^0.18.0",
     "bcrypt-nodejs": "0.0.3",
@@ -28,6 +29,7 @@
     "express": "^4.16.2",
     "mongoose": "^4.13.5",
     "passport": "^0.4.0",
+    "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
