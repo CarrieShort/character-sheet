@@ -21,14 +21,14 @@ characterRouter.post('/create', bodyParser, (req, res) => {
 // get all character data
 characterRouter.get('/characters', (req, res) => {
   Character.find({}, (err, data) => {
-    if (err) return res.status(500).json({ msg: 'there was an error' });
+    if (err) return res.status(500).json({ msg: 'could not find character with matching id' });
     res.status(200).json(data);
   });
 });
 
 // get single character data
 characterRouter.get('/character/:id', (req, res) => {
-  Character.find({ _id: req.params.id }, (err, data) => {
+  Character.findOne({ _id: req.params.id }, (err, data) => {
     if (err) return res.status(500).json({ msg: 'there was an error' });
     res.status(200).json(data);
   });
